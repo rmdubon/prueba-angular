@@ -1,0 +1,14 @@
+<div>
+  <h1>{{ movie.original_title }}</h1>
+  <h2>{{ movie.release_date }}</h2>
+  <p>{{ movie.overview }}</p>
+
+  <div *ngIf="movieImages">
+    <!-- Aquí da error porque no encontré la ruta completa de las imágenes
+    por cuestión de tiempo -->
+    <img *ngFor="let image of movieImages" [src]="'https://image.tmdb.org/t/p/w500' + image.file_path" alt="">
+  </div>
+
+
+
+</div>

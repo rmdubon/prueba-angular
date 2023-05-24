@@ -1,0 +1,4 @@
+<!-- <button (click)="getMovieImagesToShow()">Get popular movies!</button> -->
+<div class="movies--grid">
+  <app-movie *ngFor="let movieToShow of movies" [movie]="movieToShow"></app-movie>
+</div>
