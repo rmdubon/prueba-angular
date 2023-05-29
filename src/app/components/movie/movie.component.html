@@ -1,14 +1,36 @@
 <div>
   <h1>{{ movie.original_title }}</h1>
-  <h2>{{ movie.release_date }}</h2>
+  <h3>Released on {{ movie.release_date }}</h3>
   <p>{{ movie.overview }}</p>
 
   <div *ngIf="movieImages">
     <!-- Aquí da error porque no encontré la ruta completa de las imágenes
     por cuestión de tiempo -->
-    <img *ngFor="let image of movieImages" [src]="'https://image.tmdb.org/t/p/w500' + image.file_path" alt="">
+    <img *ngFor="let image of movieImages" [src]="'https://image.tmdb.org/t/p/w500' + image.file_path">
   </div>
 
+  <div *ngIf="movieDetails">
+    <div *ngIf="movieDetails.genres.length > 0" class="container">
+      <h4>Genres:</h4>
+      <h6 *ngFor="let genre of movieDetails.genres" class="item">{{ genre.name }}</h6>
+    </div>
+    <h4>
+      <a [href]="movieDetails.homepage">Homepage</a>
+    </h4>
+    <h4>
+      Status: {{ movieDetails.status }}
+    </h4>
+  </div>
 
+  <button (click)="switchShowCredits()">{{ creditsMessage }}</button>
+  <div *ngIf="movieCredits && showCredits">
+    <div *ngIf="movieCredits.cast.length > 0" class="container">
+      <h4>Cast:</h4>
+      <div *ngFor="let member of movieCredits.cast" class="item">
+        <h6>{{ member.name }}</h6>
+        <img *ngIf="member.profile_path" width="100" [src]="'https://image.tmdb.org/t/p/w500' + member.profile_path">
+      </div>
+    </div>
+  </div>
 
 </div>

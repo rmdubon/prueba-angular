@@ -1,4 +1,14 @@
-.movies--grid {
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+.container {
   font-size: large;
+  padding: 5%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+}
+
+.item {
+  display: flex;
+  justify-content: center; /* Center items horizontally */
+  background-color: rgb(248, 220, 220);
+  padding: 10px;
 }

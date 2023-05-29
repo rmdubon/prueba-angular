@@ -23,16 +23,9 @@ export class MoviesComponent implements OnInit {
   getPopularMoviesToShow() {
     this.movieService.getPopularMovies()
     .subscribe(data => {
-      console.log(data);
+      // console.log(data);
       this.movies = data.results;
     })
   }
 
-  // getMovieImagesToShow() {
-  //   this.movieService.getMovieImages()
-  //   .subscribe(data => {
-  //     console.log(data);
-  //     //this.movies = data.results;
-  //   })
-  // }
 }

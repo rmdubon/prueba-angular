@@ -1,5 +1,5 @@
 import { Component, Input, AfterViewInit } from '@angular/core';
-import { ImageRequested, Movie } from 'src/app/models/movie.model';
+import { ImageRequested, Movie, MovieCredits, MovieDetails } from 'src/app/models/movie.model';
 import { MoviesService } from 'src/app/services/movies.service';
 
 @Component({
@@ -26,16 +26,52 @@ export class MovieComponent implements AfterViewInit {
     vote_count: 0
   }
   movieImages: ImageRequested[] = [];
+  movieDetails: MovieDetails | null = null;
+  movieCredits: MovieCredits | null = null;
+  showCredits = false;
+  creditsMessage = 'Show credits >>>';
 
   constructor(
     private movieService: MoviesService
   ) {}
 
   ngAfterViewInit(): void {
+    if (this.movie.id){
+      this.getMovieImagesToShow();
+      this.getMovieDetailsToShow();
+      this.getMovieCreditsToShow();
+    }
+  }
+
+  switchShowCredits() {
+    this.showCredits = !this.showCredits;
+    if (!this.showCredits)
+      this.creditsMessage = 'Show credits >>>';
+    else
+      this.creditsMessage = 'Show less <<<';
+  }
+
+  getMovieImagesToShow() {
     this.movieService.getMovieImages(this.movie.id)
     .subscribe(data => {
-      console.log(data)
-      this.movieImages = data.posters;
+      // console.log(data);
+      this.movieImages = data.posters.slice(0,4);
+    })
+  }
+
+  getMovieDetailsToShow() {
+    this.movieService.getMovieDetails(this.movie.id)
+    .subscribe(data => {
+      // console.log(data);
+      this.movieDetails = data;
+    })
+  }
+
+  getMovieCreditsToShow() {
+    this.movieService.getMovieCredits(this.movie.id)
+    .subscribe(data => {
+      // console.log(data);
+      this.movieCredits = data;
     })
   }
 

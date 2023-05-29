@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
-import { ImageInfo, MoviesPage } from '../models/movie.model';
+import { ImageInfo, MovieCredits, MovieDetails, MoviesPage } from '../models/movie.model';
 
 import { catchError } from 'rxjs/operators';
 
@@ -26,7 +26,7 @@ export class MoviesService {
           return throwError(() => new Error ('Algo falla en el servidor'));
         }
         if (error.status === HttpStatusCode.NotFound) {
-          return throwError(() => new Error ('El producto no existe'));
+          return throwError(() => new Error ('La película no existe'));
         }
         if (error.status === HttpStatusCode.Unauthorized) {
           return throwError(() => new Error ('No estás autorizado'));
@@ -44,7 +44,7 @@ export class MoviesService {
           return throwError(() => new Error ('Algo falla en el servidor'));
         }
         if (error.status === HttpStatusCode.NotFound) {
-          return throwError(() => new Error ('El producto no existe'));
+          return throwError(() => new Error ('La película no existe'));
         }
         if (error.status === HttpStatusCode.Unauthorized) {
           return throwError(() => new Error ('No estás autorizado'));
@@ -54,22 +54,40 @@ export class MoviesService {
     )
   }
 
-  // getMovieGenres(movie_id: number) {
-  //   return this.http.get<ImageInfo>(`${this.apiUrl}/${movie_id}/images?api_key=${this.apiKey}`)
-  //   .pipe(
-  //     catchError((error: HttpErrorResponse) => {
-  //       if (error.status === HttpStatusCode.Conflict) {
-  //         return throwError(() => new Error ('Algo falla en el servidor'));
-  //       }
-  //       if (error.status === HttpStatusCode.NotFound) {
-  //         return throwError(() => new Error ('El producto no existe'));
-  //       }
-  //       if (error.status === HttpStatusCode.Unauthorized) {
-  //         return throwError(() => new Error ('No estás autorizado'));
-  //       }
-  //       return throwError(() => new Error ('Ups algo salió mal'));
-  //     })
-  //   )
-  // }
+  getMovieDetails(movie_id: number) {
+    return this.http.get<MovieDetails>(`${this.apiUrl}/${movie_id}?api_key=${this.apiKey}`)
+    .pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === HttpStatusCode.Conflict) {
+          return throwError(() => new Error ('Algo falla en el servidor'));
+        }
+        if (error.status === HttpStatusCode.NotFound) {
+          return throwError(() => new Error ('La película no existe'));
+        }
+        if (error.status === HttpStatusCode.Unauthorized) {
+          return throwError(() => new Error ('No estás autorizado'));
+        }
+        return throwError(() => new Error ('Ups algo salió mal'));
+      })
+    )
+  }
+
+  getMovieCredits(movie_id: number) {
+    return this.http.get<MovieCredits>(`${this.apiUrl}/${movie_id}/credits?api_key=${this.apiKey}`)
+    .pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === HttpStatusCode.Conflict) {
+          return throwError(() => new Error ('Algo falla en el servidor'));
+        }
+        if (error.status === HttpStatusCode.NotFound) {
+          return throwError(() => new Error ('La película no existe'));
+        }
+        if (error.status === HttpStatusCode.Unauthorized) {
+          return throwError(() => new Error ('No estás autorizado'));
+        }
+        return throwError(() => new Error ('Ups algo salió mal'));
+      })
+    )
+  }
 
 }
